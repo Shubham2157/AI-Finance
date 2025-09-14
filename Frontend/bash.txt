@@ -1,0 +1,18 @@
+# Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
+
+# React Router
+npm install react-router-dom
+
+# Axios for API calls
+npm install axios
+
+# State management (optional)
+npm install zustand    # or Redux if you prefer
+
+# Dotenv for env files
+npm install dotenv
+
+# Linting + Formatting
+npm install -D eslint prettier eslint-config-prettier eslint-plugin-react

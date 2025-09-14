@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Finance Tracker</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <style>
+        html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 220px;
+    background-color: #343a40;
+    color: #fff;
+    flex-shrink: 0;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+}
+
+.main-content {
+    margin-left: 220px;
+    padding: 20px;
+    width: calc(100% - 220px);
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.nav-link {
+    color: #ccc;
+    padding: 10px 15px;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-decoration: none;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: #495057;
+    color: #fff;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    margin-top: 20px;
+    padding-left: 0;
+    list-style: none;
+}
+
+.pagination .page-item {
+    display: inline-block;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    padding: 8px 12px;
+    margin: 0 2px;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    text-decoration: none;
+    min-width: 38px;
+    text-align: center;
+}
+
+.pagination .page-link:hover {
+    background-color: #e9ecef;
+    color: #0056b3;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.pagination .disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+/* Responsive for Mobile Devices */
+@media (max-width: 768px) {
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .pagination {
+        overflow-x: auto;
+        white-space: nowrap;
+        justify-content: start;
+        padding: 10px 5px;
+    }
+
+    .pagination .page-item {
+        flex: 0 0 auto;
+    }
+}
+    </style>
+</head>
+
+<body>
+<div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar" th:replace="fragments/nav :: sidebar"></div>
+
+    <!-- Main Dashboard Content -->
+    <div class="main-content">
+        <h1 class="mb-4 text-center text-primary">Expense Dashboard</h1>
+
+        <!-- 🔍 Filters -->
+        <form class="row g-2 mb-4" method="get" th:action="@{/dashboard}">
+            <div class="col-md-3">
+                <input type="date" name="startDate" class="form-control" th:value="${startDate}" placeholder="Start Date">
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="endDate" class="form-control" th:value="${endDate}" placeholder="End Date">
+            </div>
+            <div class="col-md-3">
+                <select name="category" class="form-select">
+                    <option value="">All Categories</option>
+                    <option th:selected="${category == 'Food'}">Food</option>
+                    <option th:selected="${category == 'Transport'}">Transport</option>
+                    <option th:selected="${category == 'Shopping'}">Shopping</option>
+                    <option th:selected="${category == 'Salary'}">Salary</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Apply Filters</button>
+            </div>
+        </form>
+
+        <!-- 📊 Summary Stats -->
+        <div class="row mb-4 text-center">
+            <div class="col-md-4">
+                <div class="alert alert-success">
+                    <strong>Total Income:</strong> ₹<span th:text="${totalIncome}">0.0</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="alert alert-danger">
+                    <strong>Total Expense:</strong> ₹<span th:text="${totalExpense}">0.0</span>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="alert alert-info">
+                    <strong>Balance:</strong> ₹<span th:text="${balance}">0.0</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 📋 Transactions Table -->
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="table-secondary">
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Bank</th>
+                    <th class="text-end">Amount (₹)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="txn : ${transactions}">
+                    <td th:text="${txn.transactionDate}">01-May-2025</td>
+                    <td th:text="${txn.description}">Sample Description</td>
+                    <td th:text="${txn.category}">Sample Category</td>
+                    <td th:text="${txn.bank}">Bank</td>
+                    <td th:text="${txn.amount}" class="text-end">1000.00</td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(transactions)}">
+                    <td colspan="4" class="text-center text-muted">No transactions found.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4 px-2">
+            <ul class="pagination flex-wrap justify-content-center">
+
+                    <!-- Previous Button -->
+                    <li class="page-item" th:classappend="${currentPage <= 1} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/dashboard(page= ${currentPage - 1}, startDate=${startDate}, endDate=${endDate}, category=${category})}">
+                            Previous
+                        </a>
+                    </li>
+
+                    <!-- Page 1 -->
+                    <li class="page-item" th:classappend="${currentPage == 1 || currentPage == 0} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/dashboard(page=1, startDate=${startDate}, endDate=${endDate}, category=${category})}">1</a>
+                    </li>
+
+                    <!-- Ellipsis before -->
+                    <li class="page-item disabled" th:if="${currentPage > 5 && totalPages > 10}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Middle pages: currentPage -3 to currentPage +3 -->
+                    <li class="page-item"
+                        th:each="i : ${#numbers.sequence(2, totalPages - 1)}"
+                        th:if="${i >= currentPage - 3 and i <= currentPage + 3}"
+                        th:classappend="${i == currentPage} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/dashboard(page=${i}, startDate=${startDate}, endDate=${endDate}, category=${category})}"
+                           th:text="${i}">2</a>
+                    </li>
+
+                    <!-- Ellipsis after -->
+                    <li class="page-item disabled" th:if="${currentPage < totalPages - 4 && totalPages > 10}">
+                        <span class="page-link">...</span>
+                    </li>
+
+                    <!-- Last Page -->
+                    <li class="page-item" th:if="${totalPages > 1}" th:classappend="${currentPage == totalPages} ? 'active'">
+                        <a class="page-link"
+                           th:href="@{/dashboard(page=${totalPages}, startDate=${startDate}, endDate=${endDate}, category=${category})}"
+                           th:text="${totalPages}">Last</a>
+                    </li>
+
+                    <!-- Next Button -->
+                    <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                        <a class="page-link"
+                           th:href="@{/dashboard(page=(${currentPage + 1}), startDate=${startDate}, endDate=${endDate}, category=${category})}">
+                            Next
+                        </a>
+                    </li>
+            </ul>
+        </div>
+
+
+    </div>
+</div>
+
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

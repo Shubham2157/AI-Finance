@@ -1,0 +1,16 @@
+| Field            | Description                                      |
+| ---------------- | ------------------------------------------------ |
+| `transaction_id` | Unique ID for transaction                        |
+| `date`           | ISO format date (yyyy-MM-dd)                     |
+| `amount`         | Positive = Credit, Negative = Debit              |
+| `merchant`       | Store, service, or sender/receiver               |
+| `description`    | Full bank message or SMS-style description       |
+| `mode`           | UPI, NEFT, ATM, Debit Card, Auto Debit, etc.     |
+| `category`       | Suggested AI/ML-generated or rule-based category |
+
+
+
+AI models can use the description field to predict category if you're training a model.
+
+Amounts are negative for debits and positive for credits.
+

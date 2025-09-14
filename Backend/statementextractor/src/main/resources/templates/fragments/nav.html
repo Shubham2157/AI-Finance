@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sidebar">
+    <!-- Sidebar Wrapper -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark flex-md-column p-3 sidebar">
+        <h5 class="text-white text-center w-100 border-bottom pb-2 mb-3">My Finance</h5>
+
+        <!-- Toggle button for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks"
+                aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navigation Links -->
+        <div class="collapse navbar-collapse w-100" id="navLinks">
+            <ul class="navbar-nav flex-column w-100">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/dashboard}" th:classappend="${currentUri == '/dashboard'} ? 'active'">
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/income}" th:classappend="${currentUri == '/income'} ? 'active'">
+                        Income
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/expense}" th:classappend="${currentUri == '/expense'} ? 'active'">
+                        Expense
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+
+<style>
+    .sidebar {
+        min-height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .nav-link {
+        color: #ccc;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-bottom: 5px;
+        transition: background 0.2s ease;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+        background-color: #495057;
+        color: #fff;
+    }
+
+    @media (max-width: 768px) {
+        .sidebar {
+            position: relative;
+            min-height: auto;
+        }
+    }
+</style>

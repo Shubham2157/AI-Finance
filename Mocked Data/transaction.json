@@ -1,0 +1,93 @@
+[
+    {
+      "transaction_id": "TXN100001",
+      "date": "2025-06-25",
+      "amount": -850.00,
+      "merchant": "Swiggy",
+      "description": "UPI payment to swiggy@ybl",
+      "mode": "UPI",
+      "category": "Food & Dining"
+    },
+    {
+      "transaction_id": "TXN100002",
+      "date": "2025-06-24",
+      "amount": -1200.00,
+      "merchant": "BigBasket",
+      "description": "UPI to bigbasket@axis",
+      "mode": "UPI",
+      "category": "Groceries"
+    },
+    {
+      "transaction_id": "TXN100003",
+      "date": "2025-06-23",
+      "amount": -550.00,
+      "merchant": "HP Petrol Pump",
+      "description": "Card Payment at HP Petrol Pump",
+      "mode": "Debit Card",
+      "category": "Fuel"
+    },
+    {
+      "transaction_id": "TXN100004",
+      "date": "2025-06-22",
+      "amount": -2000.00,
+      "merchant": "Amazon India",
+      "description": "INR 2000 debited towards purchase from Amazon",
+      "mode": "NetBanking",
+      "category": "Shopping"
+    },
+    {
+      "transaction_id": "TXN100005",
+      "date": "2025-06-21",
+      "amount": 50000.00,
+      "merchant": "ABC Pvt Ltd",
+      "description": "Salary credited via NEFT from ABC Pvt Ltd",
+      "mode": "NEFT",
+      "category": "Income"
+    },
+    {
+      "transaction_id": "TXN100006",
+      "date": "2025-06-20",
+      "amount": -250.00,
+      "merchant": "Google Pay",
+      "description": "UPI payment to friend123@okaxis",
+      "mode": "UPI",
+      "category": "Transfer"
+    },
+    {
+      "transaction_id": "TXN100007",
+      "date": "2025-06-19",
+      "amount": -3000.00,
+      "merchant": "XYZ Bank ATM",
+      "description": "ATM withdrawal from XYZ Bank ATM, Koramangala",
+      "mode": "ATM",
+      "category": "Cash Withdrawal"
+    },
+    {
+      "transaction_id": "TXN100008",
+      "date": "2025-06-18",
+      "amount": -899.00,
+      "merchant": "Netflix",
+      "description": "Auto debit for Netflix monthly subscription",
+      "mode": "Auto Debit",
+      "category": "Entertainment"
+    },
+    {
+      "transaction_id": "TXN100009",
+      "date": "2025-06-17",
+      "amount": -670.00,
+      "merchant": "Ola Cabs",
+      "description": "Paid to olacabs@icici via UPI",
+      "mode": "UPI",
+      "category": "Travel"
+    },
+    {
+      "transaction_id": "TXN100010",
+      "date": "2025-06-16",
+      "amount": -21000.00,
+      "merchant": "Canara Bank Home Loan",
+      "description": "EMI payment to CANHOMLOAN123 via NEFT",
+      "mode": "NEFT",
+      "category": "Loans & EMIs"
+    }
+  ]
+  
