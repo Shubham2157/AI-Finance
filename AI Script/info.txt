@@ -1,0 +1,3 @@
+model - https://ollama.com/library/gemma3
+
+latest ollama
