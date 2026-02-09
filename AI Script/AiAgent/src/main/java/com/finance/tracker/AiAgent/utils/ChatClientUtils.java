@@ -1,31 +1,40 @@
 package com.finance.tracker.AiAgent.utils;
 
+import com.finance.tracker.AiAgent.dto.ReportResponse;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatResponse;
-import org.springframework.ai.chat.prompt.Prompt;
-import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.ollama.api.OllamaOptions;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Type;
+import java.util.List;
 
 @Component
 public class ChatClientUtils {
 
-    OllamaChatModel ollamaChatModel;
+    ChatClient chatClient;
 
-    public ChatClientUtils(OllamaChatModel ollamaChatModel) {
-        this.ollamaChatModel = ollamaChatModel;
+    @Value("classpath:/prompt/user-prompt.st")
+    Resource userResource;
+
+    @Value("classpath:/prompt/system-prompt.st")
+    Resource systemResource;
+
+    public ChatClientUtils(ChatClient.Builder builder) {
+        chatClient = builder.build();
     }
 
-    public String getRes(){
-        Prompt prompt = new Prompt("how can I solve 8x + 7 = -23",
-            OllamaOptions.builder().build());
-        ChatResponse response = this.ollamaChatModel.call(prompt);
+    public ReportResponse getRes(Object json){
 
-        return response.getResult().getOutput().getText();
+        return chatClient
+                .prompt()
+                .user(u ->
+                        u.text(userResource)
+                                .param("json", json))
+                .system(systemResource).call()
+                .entity(ReportResponse.class);
 
     }
-
-
-
 
 }
