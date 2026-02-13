@@ -1,8 +1,8 @@
 package com.finance.tracker.AiAgent.controller;
 
-import com.finance.tracker.AiAgent.dto.ReportRequestBody;
 import com.finance.tracker.AiAgent.dto.ReportResponse;
-import com.finance.tracker.AiAgent.utils.ChatClientUtils;
+import com.finance.tracker.AiAgent.dto.Transaction;
+import com.finance.tracker.AiAgent.service.HandleUserPromptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,17 +15,18 @@ import java.util.List;
 public class ScriptController {
 
     @Autowired
-    private ChatClientUtils chatClientUtils;
+    private HandleUserPromptService handleUserPromptService;
 
 
     @GetMapping("/")
-    public ReportResponse home(){
-        return chatClientUtils.getRes("daily invest");
+    public String home(){
+        return "API Running Successfully";
     }
 
     @PostMapping("/generate/report")
-    public String generateReport(@RequestBody ReportRequestBody reportRequestBody){
-        return reportRequestBody.getMonth();
+    public List<ReportResponse> generateReport(@RequestBody List<Transaction> transactions){
+        return handleUserPromptService.generateReport(transactions);
+
     }
 
 }
